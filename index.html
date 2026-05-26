@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
-<title>Odhalujeme nesrovnalosti v AI obrázcích</title>
+<title>Odhalujeme nesrovnalosti</title>
 
 <style>
 body {
@@ -12,246 +12,149 @@ body {
   padding: 20px;
 }
 
-/* ===== LOGA ===== */
-#logo-left {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1000;
+/* HLAVIČKA */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.header-left img,
+.header-right img {
+  height: 60px;
+}
+
+.header-center {
   text-align: center;
+  flex: 1;
 }
-#logo-left img { height: 60px; }
-#logo-left .support-text { font-size: 11px; margin-top: 4px; }
 
-#logo-right {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  z-index: 1000;
+.header-center h1 {
+  margin: 0;
 }
-#logo-right img { height: 60px; }
 
-/* ===== NADPISY ===== */
-h1 { text-align: center; margin-bottom: 5px; }
-h2 { text-align: center; font-size: 18px; color: #555; margin-top: 0; }
+.header-center h2 {
+  margin: 5px 0 0;
+  font-size: 18px;
+  color: #555;
+}
 
-/* ===== METODIKA ===== */
+.support-text {
+  font-size: 11px;
+}
+
+/* BLOK */
 #method {
-  background: #fff;
+  background: #eef3ff;
   border-left: 6px solid #4a90e2;
-  padding: 20px;
+  padding: 15px;
   margin: 20px 0;
-  font-size: 15px;
-  line-height: 1.6;
 }
 
-/* ===== OVLÁDÁNÍ ===== */
-#mode-bar { text-align: center; margin-bottom: 20px; }
-
-/* ===== GRID ===== */
-#board {
+/* GRID */
+.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
 
-/* ===== PŘÍPAD ===== */
+/* KARTA */
 .case {
-  background: #fff;
-  border-radius: 12px;
+  background: white;
   padding: 10px;
-}
-
-.case h3 { text-align: center; margin: 6px 0; }
-
-/* ===== HLAVNÍ OBRÁZEK ===== */
-.main-img {
-  border: 4px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 6px;
-}
-.main-img img { width: 100%; border-radius: 4px; }
-
-/* ===== DALŠÍ OBRÁZKY ===== */
-.extra img {
-  width: 100%;
-  border-radius: 6px;
-  margin-bottom: 6px;
-}
-
-/* ===== UČITEL ===== */
-.teacher-only { display: none; }
-body.teacher .teacher-only { display: block; }
-
-input[type="text"] {
-  width: 100%;
-  font-size: 12px;
-  margin-bottom: 4px;
-}
-
-/* ===== TEXT PRO ŽÁKY ===== */
-.rating-text {
-  font-weight: bold;
+  border-radius: 10px;
   text-align: center;
-  margin-top: 6px;
+}
+
+.case img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  background: #eee;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* FULLSCREEN */
+#viewer {
+  display:none;
+  position:fixed;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  justify-content:center;
+  align-items:center;
+}
+
+#viewer img {
+  max-width:90%;
+  max-height:90%;
+}
+
+#close {
+  position:absolute;
+  top:20px;
+  right:30px;
+  color:white;
+  font-size:30px;
+  cursor:pointer;
+}
+
+/* MOBIL */
+@media (max-width:600px){
+  .header {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGA -->
-<div id="logo-left">
-  <img src="logo-o2-chytra-skola.png" alt="O2 Chytrá škola">
-  <div class="support-text">Podpořeno z programu O2 Chytrá škola.</div>
+<!-- HLAVIČKA -->
+<div class="header">
+
+  <div class="header-left">
+    <img src="logo-o2-chytra-skola.png">
+    <div class="support-text">Podpořeno z programu O2 Chytrá škola.</div>
+  </div>
+
+  <div class="header-center">
+    <h1>Odhalujeme nesrovnalosti v AI obrázcích</h1>
+    <h2>Jak poznat, že ne všechno, co vytvoří umělá inteligence, musí být pravda</h2>
+  </div>
+
+  <div class="header-right">
+    <img src="logo-zs-pastelka.png">
+  </div>
+
 </div>
 
-<div id="logo-right">
-  <img src="logo-zs-pastelka.png" alt="ZŠ Pastelka">
-</div>
-
-
-<h1>Odhalujeme nesrovnalosti v AI obrázcích</h1>
-<h2>Jak poznat, že ne všechno, co vytvoří umělá inteligence, musí být pravda</h2>
-
+<!-- BLOK -->
 <div id="method">
 <b>Jak jsme pracovali:</b><br>
 Žáci dostali 11 různých obrázků vygenerovaných umělou inteligencí a jejich úkolem bylo odhalit nesrovnalosti v nich.
 Učili se kriticky přemýšlet, hledat dezinformace a přemýšlet nad tím, že ne všechno, co vidí, musí být pravda.
 </div>
 
-<div id="mode-bar">
-  <button onclick="teacherMode()">Učitelský režim</button>
-  <button onclick="studentMode()">Žákovský režim</button>
+<!-- GALERIE -->
+<div id="board" class="grid"></div>
+
+<!-- FULLSCREEN -->
+<div id="viewer">
+  <div id="close" onclick="closeViewer()">✖</div>
+  <img id="bigImg">
 </div>
 
-<div id="board"></div>
-
 <script>
-const PASSWORD = "ucitelka";
-let isTeacher = false;
 
-let cases = JSON.parse(localStorage.getItem("ai_cases_paths")) ||
-  Array.from({length:11}, () => ({
-    color: "#cccccc",
-    main: "",
-    extras: Array(10).fill("")
-  }));
-
-function teacherMode(){
-  if(prompt("Zadej heslo učitele:")!==PASSWORD) return;
-  isTeacher=true;
-  document.body.classList.add("teacher");
-  render();
-}
-
-function studentMode(){
-  isTeacher=false;
-  document.body.classList.remove("teacher");
-  render();
-}
-
-function save(){
-  localStorage.setItem("ai_cases_paths", JSON.stringify(cases));
-}
-
-function ratingText(color){
-  if(color==="#2ecc71") return "AI výstup odpovídá původnímu návrhu";
-  if(color==="#f1c40f") return "AI návrh částečně změnila";
-  if(color==="#e74c3c") return "AI výstup je chybný / zavádějící";
-  return "";
-}
-
-function render(){
-  const board=document.getElementById("board");
-  board.innerHTML="";
-
-  cases.forEach((c,i)=>{
-    const box=document.createElement("div");
-    box.className="case";
-    box.innerHTML=`<h3>Obrázek ${i+1}</h3>`;
-
-    const main=document.createElement("div");
-    main.className="main-img";
-    main.style.borderColor=c.color;
-
-    if(c.main){
-      const im=document.createElement("img");
-      im.src=c.main;
-      main.appendChild(im);
-    }
-
-    if(isTeacher){
-      const inp=document.createElement("input");
-      inp.type="text";
-      inp.placeholder="Cesta k hlavnímu obrázku (např. img/5/main.jpg)";
-      inp.value=c.main;
-      inp.oninput=e=>{c.main=e.target.value; save(); render();};
-      main.appendChild(inp);
-
-      const picker=document.createElement("input");
-      picker.type="color";
-      picker.value=c.color;
-      
-
-picker.oninput = e => {
-  const newColor = e.target.value;
-
-  // ✅ okamžitá změna rámečku
-  main.style.borderColor = newColor;
-
-  // ✅ uložit barvu
-  c.color = newColor;
-  save();
-
-  // ❌ NEVOLAT render()
-};
-
-
-
-
-      main.appendChild(picker);
-    }
-
-    box.appendChild(main);
-
-    if(!isTeacher){
-      const t=ratingText(c.color);
-      if(t){
-        const div=document.createElement("div");
-        div.className="rating-text";
-        div.textContent=t;
-        box.appendChild(div);
-      }
-    }
-
-    const extra=document.createElement("div");
-    extra.className="extra";
-
-    c.extras.forEach((src,j)=>{
-      if(src){
-        const im=document.createElement("img");
-        im.src=src;
-        extra.appendChild(im);
-      }
-
-      if(isTeacher){
-        const inp=document.createElement("input");
-        inp.type="text";
-        inp.placeholder=`Cesta k doplňkovému obrázku ${j+1}`;
-        inp.value=src;
-        inp.oninput=e=>{c.extras[j]=e.target.value; save(); render();};
-        extra.appendChild(inp);
-      }
-    });
-
-    box.appendChild(extra);
-    board.appendChild(box);
-  });
-}
-
-render();
-</script>
-
-</body>
-</html>
+/* ✅ DOSAĎ SVÝCH 11 OBRÁZKŮ */
+const images = [
+"https://raw.githubusercontent.com/zspastelka/Co-je-AI/main/img/AI%204.A_1.jpg",
+"https://raw.githubusercontent.com/zspastelka/Co-je-AI/main/img/AI%204.A_2.jpg",
+"https://raw.githubusercontent.com/zspastelka/Co-je-AI/main/img/AI%204.A_3.jpg",
+"https://raw.githubusercontent.com/zspastelka/Co-je-AI/main/img/AI%204.A_4.jpg",
