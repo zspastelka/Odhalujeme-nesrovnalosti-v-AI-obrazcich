@@ -166,3 +166,37 @@ const images = [
 "https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/10/Fale%C5%A1%20nebo%20pravda%2010.jpg",
 "https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/11/Fale%C5%A1%20nebo%20pravda%2011.jpg",
 
+const board = document.getElementById("board");
+
+/* vykreslení */
+images.forEach((src, i) => {
+
+  const box = document.createElement("div");
+  box.className = "case";
+
+  const title = document.createElement("h3");
+  title.textContent = "Plakát " + (i+1);
+
+  const img = document.createElement("img");
+  img.src = src;
+  img.onclick = () => openViewer(src);
+
+  box.appendChild(title);
+  box.appendChild(img);
+  board.appendChild(box);
+});
+
+/* fullscreen */
+function openViewer(src){
+  document.getElementById("bigImg").src = src;
+  document.getElementById("viewer").style.display = "flex";
+}
+
+function closeViewer(){
+  document.getElementById("viewer").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
