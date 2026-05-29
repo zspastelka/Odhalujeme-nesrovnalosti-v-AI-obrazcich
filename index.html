@@ -171,8 +171,8 @@ const images = [
 const board = document.getElementById("board");
 
 /* vykreslení */
-images.forEach((src, i) => {
 
+images.forEach((src, i) => {
   const box = document.createElement("div");
   box.className = "case";
 
@@ -183,10 +183,33 @@ images.forEach((src, i) => {
   img.src = src;
   img.onclick = () => openViewer(src);
 
+  // tlačítko
+  const btn = document.createElement("button");
+  btn.textContent = "Řešení";
+
+  // skrytý obrázek řešení
+  const solutionImg = document.createElement("img");
+  solutionImg.src = src; // můžeš změnit na jiný obrázek
+  solutionImg.style.display = "none";
+  solutionImg.style.marginTop = "10px";
+  solutionImg.style.height = "150px";
+  solutionImg.style.objectFit = "contain";
+  solutionImg.style.background = "#eee";
+  solutionImg.style.borderRadius = "8px";
+
+  btn.onclick = () => {
+    solutionImg.style.display =
+      solutionImg.style.display === "none" ? "block" : "none";
+  };
+
   box.appendChild(title);
   box.appendChild(img);
+  box.appendChild(btn);
+  box.appendChild(solutionImg);
+
   board.appendChild(box);
 });
+
 
 /* fullscreen */
 function openViewer(src){
