@@ -187,24 +187,12 @@ images.forEach((src, i) => {
   const btn = document.createElement("button");
   btn.textContent = "Řešení";
 
-  const solutionImg = document.createElement("img");
-  solutionImg.src = solutions[i]; // 👈 jiné obrázky
-  solutionImg.style.display = "none";
-  solutionImg.style.marginTop = "10px";
-  solutionImg.style.height = "150px";
-  solutionImg.style.objectFit = "contain";
-  solutionImg.style.background = "#eee";
-  solutionImg.style.borderRadius = "8px";
-
-  btn.onclick = () => {
-    solutionImg.style.display =
-      solutionImg.style.display === "none" ? "block" : "none";
-  };
+  // ✅ kliknutí otevře řešení ve fullscreen
+  btn.onclick = () => openViewer(solutions[i]);
 
   box.appendChild(title);
   box.appendChild(img);
   box.appendChild(btn);
-  box.appendChild(solutionImg);
 
   board.appendChild(box);
 });
