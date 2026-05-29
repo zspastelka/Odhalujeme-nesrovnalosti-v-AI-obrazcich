@@ -188,6 +188,20 @@ const solutions = [
 ``
   
 
+const answers = [
+  "fake",
+  "pravda",
+  "fake",
+  "pravda",
+  "fake",
+  "pravda",
+  "fake",
+  "pravda",
+  "fake",
+  "pravda",
+  "fake"
+];
+
 images.forEach((src, i) => {
   const box = document.createElement("div");
   box.className = "case";
@@ -199,18 +213,43 @@ images.forEach((src, i) => {
   img.src = src;
   img.onclick = () => openViewer(src);
 
-  const btn = document.createElement("button");
-  btn.textContent = "Řešení";
+  // ✅ tlačítka pro volbu
+  const btnTrue = document.createElement("button");
+  btnTrue.textContent = "✅ Pravda";
 
-  // ✅ kliknutí otevře řešení ve fullscreen
-  btn.onclick = () => {
-  document.getElementById("bigImg").src = solutions[i];
-  document.getElementById("viewer").style.display = "flex";
-};
+  const btnFake = document.createElement("button");
+  btnFake.textContent = "❌ Fake";
+
+  // ✅ výsledek
+  const result = document.createElement("div");
+  result.style.marginTop = "8px";
+  result.style.fontWeight = "bold";
+
+  btnTrue.onclick = () => {
+    result.textContent =
+      answers[i] === "pravda" ? "✅ Správně!" : "❌ Špatně!";
+  };
+
+  btnFake.onclick = () => {
+    result.textContent =
+      answers[i] === "fake" ? "✅ Správně!" : "❌ Špatně!";
+  };
+
+  // ✅ tlačítko řešení
+  const btnSolution = document.createElement("button");
+  btnSolution.textContent = "🔍 Zobraz řešení";
+
+  btnSolution.onclick = () => {
+    document.getElementById("bigImg").src = solutions[i];
+    document.getElementById("viewer").style.display = "flex";
+  };
 
   box.appendChild(title);
   box.appendChild(img);
-  box.appendChild(btn);
+  box.appendChild(btnTrue);
+  box.appendChild(btnFake);
+  box.appendChild(result);
+  box.appendChild(btnSolution);
 
   board.appendChild(box);
 });
