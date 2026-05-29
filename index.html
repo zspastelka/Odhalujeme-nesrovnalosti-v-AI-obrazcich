@@ -225,7 +225,14 @@ images.forEach((src, i) => {
   imgBox.className = "img-box";
 
   const img = document.createElement("img");
-  img.src = src;
+img.src = src;
+
+// ✅ kliknutí zvětší obrázek
+img.onclick = () => {
+  document.getElementById("bigImg").src = src;
+  document.getElementById("viewer").style.display = "flex";
+};
+
 
   imgBox.appendChild(img);
 
