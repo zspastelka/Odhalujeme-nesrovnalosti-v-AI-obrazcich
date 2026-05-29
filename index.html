@@ -236,21 +236,7 @@ img.onclick = () => {
 
   imgBox.appendChild(img);
 
-  const btnTrue = document.createElement("button");
-  btnTrue.textContent = "✅ Skutečnost";
-
-  const btnFake = document.createElement("button");
-  btnFake.textContent = "❌ AI";
-
-  const result = document.createElement("div");
-
-  btnTrue.onclick = () => {
-    result.textContent = answers[i] === "pravda" ? "✅ Správně!" : "❌ Špatně!";
-  };
-
-  btnFake.onclick = () => {
-    result.textContent = answers[i] === "fake" ? "✅ Správně!" : "❌ Špatně!";
-  };
+ 
 
   const btnSolution = document.createElement("button");
   btnSolution.textContent = "🔍 Řešení";
