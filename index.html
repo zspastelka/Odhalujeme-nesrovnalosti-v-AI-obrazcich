@@ -13,10 +13,30 @@ body {
 }
 
 /* HLAVIČKA */
+/* HLAVIČKA */
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  background: #d9dde3;
+  padding: 10px 0;
+}
+
+.header-left img,
+.header-right img {
+  height: 60px;
+}
+
+.header-left {
+  text-align: left;
+}
+
+.header-right {
+  text-align: right;
+}
+
+.support-text {
+  font-size: 11px;
 }
 
 .header-center {
@@ -24,13 +44,24 @@ body {
   flex: 1;
 }
 
-/* MODRÝ BLOK */
-#method {
-  background: #dfe8f6;
-  padding: 15px;
-  border-left: 5px solid #2f6fdd;
-  margin: 15px 0;
+.header-center h1 {
+  margin: 0;
 }
+
+.header-center h2 {
+  margin: 5px 0 0;
+  font-size: 18px;
+  color: #555;
+}
+
+/* MODRÝ BOX */
+#method {
+  background: #cfd6e2;
+  border-left: 6px solid #3a6ecb;
+  padding: 15px;
+  margin: 10px 0 20px 0;
+}
+``
 
 /* GRID */
 .grid {
