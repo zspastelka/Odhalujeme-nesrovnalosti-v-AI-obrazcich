@@ -203,7 +203,10 @@ images.forEach((src, i) => {
   btn.textContent = "Řešení";
 
   // ✅ kliknutí otevře řešení ve fullscreen
-  btn.onclick = () => openViewer(solutions[i]);
+  btn.onclick = () => {
+  document.getElementById("bigImg").src = solutions[i];
+  document.getElementById("viewer").style.display = "flex";
+};
 
   box.appendChild(title);
   box.appendChild(img);
