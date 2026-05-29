@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>Odhalujeme nesrovnalosti</title>
+
+<style>
 body {
   font-family: Arial, sans-serif;
   background: #d9dde3;
@@ -10,22 +17,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .header-center {
   text-align: center;
   flex: 1;
-}
-
-.header-center h1 {
-  margin: 0;
-}
-
-.header-center h2 {
-  margin: 5px 0;
-  color: #555;
-  font-size: 18px;
 }
 
 /* MODRÝ BLOK */
@@ -43,7 +39,7 @@ body {
   gap: 20px;
 }
 
-/* KARTIČKA */
+/* KARTA */
 .case {
   background: #eeeeee;
   padding: 15px;
@@ -51,7 +47,7 @@ body {
   text-align: center;
 }
 
-/* KONTEJNER OBRÁZKU */
+/* OBRÁZEK BOX */
 .img-box {
   background: #d3d3d3;
   border-radius: 10px;
@@ -82,24 +78,152 @@ button:hover {
 #viewer {
   display: none;
   position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.9);
-  justify-content: center;
-  align-items: center;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  justify-content:center;
+  align-items:center;
 }
 
 #viewer img {
-  max-width: 90%;
-  max-height: 90%;
+  max-width:90%;
+  max-height:90%;
 }
 
 #close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
+  position:absolute;
+  top:20px;
+  right:30px;
+  color:white;
+  font-size:30px;
+  cursor:pointer;
 }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div>O2 Chytrá škola</div>
+
+  <div class="header-center">
+    <h1>Odhalujeme nesrovnalosti v AI obrázcích</h1>
+    <h2>Jak poznat pravdu a fake</h2>
+  </div>
+
+  <div>ŽŠ Pastelka</div>
+</div>
+
+<div id="method">
+<b>Jak jsme pracovali:</b><br>
+Žáci hledali chyby v AI obrázcích.
+</div>
+
+<div class="grid" id="board"></div>
+
+<div id="viewer">
+  <div id="close" onclick="closeViewer()">✖</div>
+  <img id="bigImg">
+</div>
+
+<script>
+
+// OBRÁZKY
+const images = [
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/1/Fale%C5%A1%20nebo%20pravda%201.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/2/Fale%C5%A1%20nebo%20pravda%202.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/3/Fale%C5%A1%20nebo%20pravda%203.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/4/Fale%C5%A1%20nebo%20pravda%204.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/5/Fale%C5%A1%20nebo%20pravda%205.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/6/Fale%C5%A1%20nebo%20pravda%206.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/7/Fale%C5%A1%20nebo%20pravda%207.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/8/Fale%C5%A1%20nebo%20pravda%208.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/9/Fale%C5%A1%20nebo%20pravda%209.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/10/Fale%C5%A1%20nebo%20pravda%2010.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/11/Fale%C5%A1%20nebo%20pravda%2011.jpg"
+];
+
+// ŘEŠENÍ
+const solutions = [
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/1/FnP%201.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/2/FnP%202.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/3/FnP%203.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/4/FnP%204.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/5/FnP%205.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/6/FnP%206.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/7/FnP%207.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/8/FnP%208.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/9/FnP%209.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/10/FnP%2010.jpg",
+"https://raw.githubusercontent.com/zspastelka/Odhalujeme-nesrovnalosti-v-AI-obrazcich/main/img/11/FnP%2011.jpg"
+];
+
+// SPRÁVNÉ ODPOVĚDI
+const answers = [
+"fake","pravda","fake","pravda","fake",
+"pravda","fake","pravda","fake","pravda","fake"
+];
+
+const board = document.getElementById("board");
+
+// GENEROVÁNÍ KARET
+images.forEach((src, i) => {
+
+  const box = document.createElement("div");
+  box.className = "case";
+
+  const title = document.createElement("h3");
+  title.textContent = "Obrázek " + (i+1);
+
+  const imgBox = document.createElement("div");
+  imgBox.className = "img-box";
+
+  const img = document.createElement("img");
+  img.src = src;
+
+  imgBox.appendChild(img);
+
+  const btnTrue = document.createElement("button");
+  btnTrue.textContent = "✅ Pravda";
+
+  const btnFake = document.createElement("button");
+  btnFake.textContent = "❌ Fake";
+
+  const result = document.createElement("div");
+
+  btnTrue.onclick = () => {
+    result.textContent = answers[i] === "pravda" ? "✅ Správně!" : "❌ Špatně!";
+  };
+
+  btnFake.onclick = () => {
+    result.textContent = answers[i] === "fake" ? "✅ Správně!" : "❌ Špatně!";
+  };
+
+  const btnSolution = document.createElement("button");
+  btnSolution.textContent = "🔍 Řešení";
+
+  btnSolution.onclick = () => {
+    document.getElementById("bigImg").src = solutions[i];
+    document.getElementById("viewer").style.display = "flex";
+  };
+
+  box.appendChild(title);
+  box.appendChild(imgBox);
+  box.appendChild(btnTrue);
+  box.appendChild(btnFake);
+  box.appendChild(result);
+  box.appendChild(btnSolution);
+
+  board.appendChild(box);
+});
+
+// ZAVŘENÍ
+function closeViewer(){
+  document.getElementById("viewer").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
